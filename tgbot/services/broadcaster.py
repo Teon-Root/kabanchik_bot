@@ -14,16 +14,6 @@ async def send_message(
     disable_notification: bool = False,
     reply_markup: InlineKeyboardMarkup = None,
 ) -> bool:
-    """
-    Safe messages sender
-
-    :param bot: Bot instance.
-    :param user_id: user id. If str - must contain only digits.
-    :param text: text of the message.
-    :param disable_notification: disable notification or not.
-    :param reply_markup: reply markup.
-    :return: success.
-    """
     try:
         await bot.send_message(
             user_id,
@@ -58,15 +48,6 @@ async def broadcast(
     disable_notification: bool = False,
     reply_markup: InlineKeyboardMarkup = None,
 ) -> int:
-    """
-    Simple broadcaster.
-    :param bot: Bot instance.
-    :param users: List of users.
-    :param text: Text of the message.
-    :param disable_notification: Disable notification or not.
-    :param reply_markup: Reply markup.
-    :return: Count of messages.
-    """
     count = 0
     try:
         for user_id in users:
