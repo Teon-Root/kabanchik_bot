@@ -1,4 +1,4 @@
-FROM python:3.11-slim
+FROM python:3.12-slim
 # get BOT_NAME from .env !
 ENV BOT_NAME=mybotname
 

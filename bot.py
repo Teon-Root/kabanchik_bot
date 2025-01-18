@@ -3,6 +3,7 @@ import logging
 
 import betterlogging as bl
 from aiogram import Bot, Dispatcher
+from aiogram.client.default import DefaultBotProperties
 from aiogram.fsm.storage.memory import MemoryStorage
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
@@ -14,7 +15,7 @@ from tgbot.services.utils import parser
 
 
 async def on_startup(bot: Bot, admin_ids: list[int]):
-    await broadcaster.broadcast(bot, admin_ids, "Бот був запущений")
+    await broadcaster.broadcast(bot, admin_ids, 'Бот був запущений')
 
 
 def register_global_middlewares(dp: Dispatcher, config: Config):
@@ -33,19 +34,20 @@ def setup_logging():
 
     logging.basicConfig(
         level=logging.INFO,
-        format="%(filename)s:%(lineno)d #%(levelname)-8s [%(asctime)s] - %(name)s - %(message)s",
+        format='%(filename)s:%(lineno)d #%(levelname)-8s [%(asctime)s] - %(name)s - %(message)s',
     )
     logger = logging.getLogger(__name__)
-    logger.info("Starting bot")
+    logger.info('Starting bot')
 
 
 async def main():
     setup_logging()
 
-    config = load_config(".env")
+    config = load_config('.env')
     storage = MemoryStorage()
 
-    bot = Bot(token=config.tg_bot.token, parse_mode="HTML")
+    default = DefaultBotProperties(parse_mode='HTML')
+    bot = Bot(token=config.tg_bot.token, default=default)
     dp = Dispatcher(storage=storage)
 
     dp.include_routers(*routers_list)
@@ -60,8 +62,8 @@ async def main():
     await dp.start_polling(bot)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     try:
         asyncio.run(main())
     except (KeyboardInterrupt, SystemExit):
-        logging.error("Бот був вимкнений!")
+        logging.error('Бот був вимкнений!')
